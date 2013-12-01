@@ -1,0 +1,1 @@
+include 'common', 'server', 'clients:jvm:simple', 'clients:jvm:servlets', 'clients:jvm:spring', 'plugins:jvm:info'

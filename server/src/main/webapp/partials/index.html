@@ -1,0 +1,66 @@
+    <div class="container" role="navigation">
+     <ol class="breadcrumb">
+         <li><a href="#">Home</a></li>
+         <li><a href="#">Library</a></li>
+         <li class="active">Data</li>
+     </ol>
+    </div>
+
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-right">
+            <div class="col-xs-12 col-sm-9">
+                <h1>Digital Sports</h1>
+                <ul class="nav nav-tabs">
+				  <li ng-show="groups.servicesValid" class="{{groups.servicesActive ? 'active' : ''}}"><a href="#services" data-toggle="tab">Services</a></li>
+				  <li ng-show="groups.groupsValid" class="{{groups.groupsActive > 0 ? 'active' : ''}}"><a href="#groups" data-toggle="tab">Groups</a></li>
+				</ul>
+				
+				<div class="tab-content">
+                  <div class="tab-pane fade in {{groups.groupsActive ? 'active' : ''}}" id="groups">
+	                <table class="table table-striped">
+	                <thead>
+	                <tr>
+	                    <th>Name</th>
+	                    <th>Applications</th>
+	                </tr>
+	                </thead>
+	                <tbody>
+	                <tr ng-repeat="group in groups.groups | orderBy:'id'">
+	                    <td><a href="#/groups/{{tree}}/{{group.id}}">{{group.id}}</a></td>
+	                    <td>Data</td>
+	                </tr>
+	                </tbody>
+	                </table>
+	              </div>
+	              <div class="tab-pane fade in {{groups.servicesActive ? 'active' : ''}}" id="services">
+	                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Instances</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="service in groups.services | orderBy:'name'">
+                        <td><a href="#/services/{{tree}}/{{service.name}}">{{service.name}}</a></td>
+                        <td>{{service.instances.length}}</td>
+                        <td>{{service.type}}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+	              </div>
+	            </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas">
+                Nav
+            </div>
+        </div>
+        
+        <hr>
+
+        <footer>
+            <p>&copy; Z|NET Development, LLC 2013</p>
+        </footer>
+    </div>
+</div>

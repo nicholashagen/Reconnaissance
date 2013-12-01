@@ -1,0 +1,25 @@
+body {
+  min-height: 2000px;
+  padding-top: 50px;
+}
+
+.breadcrumb {
+	background-color: transparent !important;
+    padding-left: 0 !important;
+    margin-bottom: 10px;
+}
+
+h1 {
+	font-size: 16px;
+	margin-top: 0;
+	position: relative;
+}
+
+.nav-tabs { margin-top: -38px; }
+.nav-tabs > li { float: right; }
+
+.tab-content > .tab-pane { margin-top: 10px; }
+
+table>thead>tr>th {
+	background-color: #d6d6d6;
+}

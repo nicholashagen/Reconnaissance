@@ -1,0 +1,25 @@
+def currentProject = project
+
+allprojects {
+	version '1.0'
+	repositories {
+		mavenCentral()
+		maven { url "http://repo.springsource.org/snapshot" }
+        maven { url "http://repo.springsource.org/milestone" }
+	}
+
+	apply plugin: 'eclipse'
+	eclipse {
+        project {
+            name = "${group ? group.replace('.', '-') : ''}${name ? '-' + name : ''}"
+        }
+    }
+}
+
+subprojects {
+	apply plugin:'java'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.7'
+}
