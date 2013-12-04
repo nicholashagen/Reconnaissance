@@ -4,3 +4,4 @@ build/
 .project
 .classpath
 .settings/
+server/src/main/resources/services.json
