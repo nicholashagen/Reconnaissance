@@ -18,13 +18,18 @@ apply plugin: 'application'
 mainClassName = 'com.znet.reconnaissance.server.Application'
 
 dependencies {
+    compile project(':common')
     compile 'javax.inject:javax.inject:1'
     // providedCompile 'javax.servlet:servlet-api:2.5'
+    compile 'org.apache.tomcat.embed:tomcat-embed-core:7.0.47'
     compile('org.springframework.boot:spring-boot-starter-web:0.5.0.M6') {
         exclude group:'org.springframework.boot', module:'spring-boot-starter-tomcat'
     }
     compile 'org.springframework.boot:spring-boot-starter-actuator:0.5.0.M6'
-    compile 'org.springframework.boot:spring-boot-starter-jetty:0.5.0.M6'
+    compile('org.springframework.boot:spring-boot-starter-websocket:0.5.0.M6') {
+        exclude group:'org.apache.tomcat.embed', module:'tomcat-embed-core'
+    }
+    //compile 'org.springframework.boot:spring-boot-starter-jetty:0.5.0.M6'
     compile 'org.springframework.boot:spring-boot-starter-shell-remote:0.5.0.M6'
     compile 'org.springframework:spring-context-support:4.0.0.RC1'
     compile 'org.apache.tomcat:juli:6.0.13'

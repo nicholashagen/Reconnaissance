@@ -21,7 +21,12 @@
                 </ul>
             </div>
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas">
-                Nav
+                Nav<br />
+                <ul>
+                    <li ng-repeat="notification in notifications track by $index">
+                        {{notification}}
+                    </li>
+                </ul>
             </div>
         </div>
         

@@ -1,7 +1,40 @@
 (function() {
 	angular.module('recon.services', [ ])
+		.service('websocketService', [
+            '$rootScope',
+            function($rootScope) {
+            	console.log('CREATING!');
+            	
+            	var websocket = null;
+            	var connect = function() {
+            		if (!websocket) {
+            			websocket = new SockJS("/status");
+            			websocket.onopen = function() {  
+            				console.log("Socket has been opened!");  
+            			};
+            			websocket.onclose = function() {
+            				console.log('Socket has been closed!');
+            			}
+            		}
+            	}
+            	
+                return {
+                	subscribe : function() {
+                		connect();
+                		var notifications = [ ];
+                		websocket.onmessage = function(message) {
+                        	$rootScope.$apply(function() {
+                        		notifications.push(message.data);
+                        	})
+                        };
+                        
+                        return notifications;
+                	}
+                };
+            }
+	    ])
 		.service('servicesService', [
-		    'Service', '$rootScope',
+		    'Service',
 		    function(Service) {
 		    	return {
 		    		getService : function(tree, id) {

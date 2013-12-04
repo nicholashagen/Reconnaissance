@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
-import com.znet.reconnaissance.server.controllers.RegistrationController.Registration;
+import com.znet.reconnaissance.model.Registration;
 
 @Service
 public class ServiceRegistry {
