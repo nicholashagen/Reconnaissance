@@ -18,6 +18,10 @@ public class Registration {
 		super();
 	}
 
+	public String getId() {
+		return this.tree + ":" + this.name;
+	}
+	
 	public String getTree() {
 		return this.tree;
 	}

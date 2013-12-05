@@ -68,6 +68,11 @@ public class BeanUtil {
 			throws BeanException {
 		try {
 			Method writeMethod = property.getWriteMethod();
+			if (writeMethod == null) {
+				// TODO: warn?
+				return;
+			}
+			
 			writeMethod.invoke(object, value);
 		}
 		catch (Exception exception) {

@@ -61,7 +61,7 @@
 		    			Service.query(function(services) {
 		    				for (var i = 0; i < services.length; i++) {
 			    				var service = services[i];
-			    				var tree = service.tree.split(/:/);
+			    				var tree = service.registration.tree.split(/:/);
 			    				
 			    				var group = groups;
 			    				for (var j = 0; j < tree.length; j++) {
@@ -77,11 +77,11 @@
 			    				var tmp = group.services[service.name];
 			    				if (!tmp) {
 			    					tmp = { 
-			    						name: service.name,
-			    						type: service.type,
+			    						name: service.registration.name,
+			    						type: service.registration.type,
 			    						instances: [ ] 
 			    					};
-			    					group.services[service.name] = tmp;
+			    					group.services[service.registration.name] = tmp;
 			    				}
 			    				
 			    				tmp.instances.push(service);

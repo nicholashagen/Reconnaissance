@@ -44,6 +44,7 @@
                     <tbody>
                     <tr ng-repeat="service in groups.services | orderBy:'name'">
                         <td><a href="#/services/{{tree}}/{{service.name}}">{{service.name}}</a></td>
+                        <!-- TODO: is service up based on iteration of all? -->
                         <td>{{service.instances.length}}</td>
                         <td>{{service.type}}</td>
                     </tr>

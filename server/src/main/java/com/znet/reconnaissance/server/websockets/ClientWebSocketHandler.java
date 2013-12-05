@@ -13,7 +13,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 	@Override
     public void afterConnectionEstablished(final WebSocketSession session) 
     		throws Exception {
-		
+		/*
 		System.out.println("WEB SOCKET OPEN: " + session);
 		new Timer().scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -23,6 +23,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 				catch (Exception e) { e.printStackTrace(); }
 			}
 		}, 3000, 5000);
+		*/
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.znet.reconnaissance.handlers.Handler;
 import com.znet.reconnaissance.handlers.HandlerFactory;
 import com.znet.reconnaissance.model.Client;
 import com.znet.reconnaissance.model.CommandMessage;
+import com.znet.reconnaissance.server.service.Service;
 
 
 @Component
@@ -71,8 +72,9 @@ public class ServiceWebSocketHandler extends TextWebSocketHandlerAdapter {
     }
     
     protected void disconnect(Client<?> client) {
-    	// disconnect client
+    	// TODO: disconnect client (strange to have connected in Register, disconected here)
     	this.clients.remove(client.getId());
+    	((WSClient) client).getService().disconnected();
     }
     
     private void startMonitors() {
@@ -105,12 +107,17 @@ public class ServiceWebSocketHandler extends TextWebSocketHandlerAdapter {
 		}
 	}
 
-    protected static class WSClient extends Client<WebSocketSession> {
+    public static class WSClient extends Client<WebSocketSession> {
 
+    	private Service service;
+    	
 		public WSClient(WebSocketSession session) {
 			super(session.getId(), session);
 		}
 
+		public Service getService() { return this.service; }
+		public void setService(Service service) { this.service = service; }
+		
 		@Override
 		protected void sendMessage(String payload) {
 			try { this.getSession().sendMessage(new TextMessage(payload)); }

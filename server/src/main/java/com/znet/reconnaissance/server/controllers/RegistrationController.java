@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.znet.reconnaissance.model.Registration;
 import com.znet.reconnaissance.model.RegistrationResponse;
-import com.znet.reconnaissance.server.ServiceRegistry;
+import com.znet.reconnaissance.server.service.Service;
+import com.znet.reconnaissance.server.service.ServiceRegistry;
 
 @Controller
 @RequestMapping(headers ={"Accept=application/json"})
@@ -42,6 +43,8 @@ public class RegistrationController {
 		try (InputStream input = 
 				this.getClass().getResourceAsStream("/services.json")) {
 
+			if (input == null) { return; }
+			
 			try (Reader reader = 
 					new BufferedReader(new InputStreamReader(input))) {
 				
@@ -65,7 +68,7 @@ public class RegistrationController {
 	
 	@ResponseBody
 	@RequestMapping(value="/services", method=RequestMethod.GET)
-	public Set<Registration> list(HttpServletResponse response) {
+	public Collection<Service> list(HttpServletResponse response) {
 		response.setHeader("max-age", "10000");
 		return serviceRegistry.listServices();
     }
