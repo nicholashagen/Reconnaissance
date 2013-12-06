@@ -62,7 +62,7 @@ public class RegistrationController {
 			reg.setHostname(info.getString("host"));
 			reg.setEnvironment(info.getString("environment"));
 			reg.setType(info.getString("type"));
-			this.serviceRegistry.registerService(reg);
+			// TODO: this.serviceRegistry.registerService(reg);
 		}
 	}
 	
@@ -70,13 +70,13 @@ public class RegistrationController {
 	@RequestMapping(value="/services", method=RequestMethod.GET)
 	public Collection<Service> list(HttpServletResponse response) {
 		response.setHeader("max-age", "10000");
-		return serviceRegistry.listServices();
+		return serviceRegistry.getServices();
     }
 	
 	@ResponseBody
 	@RequestMapping(value="/register2", method=RequestMethod.POST)
 	public RegistrationResponse register(@RequestBody Registration registration) {
-		serviceRegistry.registerService(registration);
+		// TODO: serviceRegistry.registerService(registration);
         return new RegistrationResponse(registration);
     }
 }

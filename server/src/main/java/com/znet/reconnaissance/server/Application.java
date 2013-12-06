@@ -7,20 +7,20 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.support.PerConnectionWebSocketHandler;
 
-import com.znet.reconnaissance.server.websockets.ServiceWebSocketHandler;
-import com.znet.reconnaissance.server.websockets.ClientWebSocketHandler;
+import com.znet.reconnaissance.server.client.ClientWebSocketHandler;
+import com.znet.reconnaissance.server.service.websockets.ServiceWebSocketHandler;
 
 @ComponentScan
 @EnableAutoConfiguration
 public class Application {
 
-	@Inject
-	private ServiceWebSocketHandler serviceWebSocketHandler;
+	@Inject private ClientWebSocketHandler clientWebSocketHandler;
+	@Inject private ServiceWebSocketHandler serviceWebSocketHandler;
 	
 	public static void main(String... args) {
 		SpringApplication.run(Application.class, args);
+
 	}
 	
 	@Bean(name="/register")
@@ -30,6 +30,6 @@ public class Application {
 	
 	@Bean(name="/status")
     public WebSocketHandler createClientWebSocketHandler() {
-		return new PerConnectionWebSocketHandler(ClientWebSocketHandler.class);
+		return clientWebSocketHandler;
     }
 }

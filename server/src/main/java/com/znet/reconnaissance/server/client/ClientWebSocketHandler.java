@@ -1,29 +1,29 @@
-package com.znet.reconnaissance.server.websockets;
+package com.znet.reconnaissance.server.client;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.inject.Inject;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.adapter.TextWebSocketHandlerAdapter;
 
+import com.znet.reconnaissance.model.Client;
+import com.znet.reconnaissance.server.service.websockets.WSClient;
+
+@Component
 public class ClientWebSocketHandler extends TextWebSocketHandlerAdapter {
 
+	@Inject private ClientRegistry clientRegistry;
+	
 	@Override
     public void afterConnectionEstablished(final WebSocketSession session) 
     		throws Exception {
-		/*
-		System.out.println("WEB SOCKET OPEN: " + session);
-		new Timer().scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				System.out.println("SEND MESSAGE: ");
-				try { session.sendMessage(new TextMessage("TESTING")); }
-				catch (Exception e) { e.printStackTrace(); }
-			}
-		}, 3000, 5000);
-		*/
+		
+		WSClient client = new WSClient(session);
+		client.connected();
+		
+		clientRegistry.registerClient(client);
     }
 
     @Override
@@ -36,6 +36,8 @@ public class ClientWebSocketHandler extends TextWebSocketHandlerAdapter {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
     		throws Exception {
-    	System.out.println("WEB SOCKET CLOSE: " + session + ": " + status);
+    	
+    	Client<?> client = clientRegistry.getClient(session.getId());
+    	client.disconnect();
     }
 }

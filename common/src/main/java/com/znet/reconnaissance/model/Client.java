@@ -1,7 +1,9 @@
 package com.znet.reconnaissance.model;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.znet.reconnaissance.commands.Command;
@@ -18,8 +20,9 @@ public abstract class Client<T> {
 	
 	private String id;
 	private T session;
-	private Map<String, Message> messages = 
-		new ConcurrentHashMap<String, Message>();
+	private boolean connected;
+	private Set<ClientListener> listeners = new HashSet<>();
+	private Map<String, Message> messages = new ConcurrentHashMap<>();
 	
 	private HeartbeatCallback heartbeatCallback = new HeartbeatCallback();
 	
@@ -42,6 +45,42 @@ public abstract class Client<T> {
 	
 	protected void setSession(T session) {
 		this.session = session;
+	}
+	
+	public synchronized void addListener(ClientListener listener) {
+		this.listeners.add(listener);
+	}
+	
+	public synchronized void removeListener(ClientListener listener) {
+		this.listeners.remove(listener);
+	}
+	
+	public synchronized void connected() {
+		this.connected = true;
+		for (ClientListener listener : this.listeners) {
+			listener.connected(this);
+		}
+	}
+	
+	public synchronized void registered() {
+		for (ClientListener listener : this.listeners) {
+			listener.registered(this);
+		}
+	}
+	
+	public synchronized void disconnected() {
+		this.connected = false;
+		for (ClientListener listener : this.listeners) {
+			listener.disconnected(this);
+		}
+	}
+	
+	public void disconnect() {
+		disconnected();
+	}
+	
+	public boolean isConnected() { 
+		return this.connected;
 	}
 	
 	public void send(Command<?> command) {
